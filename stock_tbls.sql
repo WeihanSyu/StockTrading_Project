@@ -126,9 +126,4 @@ AS
 GO
 
 
-SELECT stock_id, COUNT(*) FROM daily_adj 
-WHERE symbol = 'TRKA'
-GROUP BY stock_id
-HAVING COUNT(*) > 1;
-
 
