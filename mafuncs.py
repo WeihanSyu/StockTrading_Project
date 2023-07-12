@@ -80,8 +80,8 @@ def vma(prices, n, length, s):
     a = s/(n+1)
     for i in range(9, length-n+1):
         for j in range(i, i+n):
-            numerator[i-9] += ( prices[j]*( (a*b[j-9])**(abs(j-i-9)) ) )  # abs(j-i-9) must always go from 9 to 0
-            denominator[i-9] += ( (a*b[j-9])**(abs(j-i-9)) )  # Math looks good
+            numerator[i-9] += ( prices[j]*( (a*b[j-9])**(abs(j-i-9)) ) )  
+            denominator[i-9] += ( (a*b[j-9])**(abs(j-i-9)) )  
         ma.append( sum(numerator[(i-9):(i+1)]) / sum(denominator[(i-9):(i+1)]) )
     return ma
 
@@ -89,7 +89,7 @@ def lsma(prices, n, length, *args):
     ma = []
     b = []
     a = []
-    t = [x for x in range(1, length+1)]  # Since all times are divided evenly (intraday, daily, weekly), let's call each time 1
+    t = [x for x in range(1, length+1)]  
     sumTX = [0]*(length-n+1)
     sumT = [0]*(length-n+1)
     sumX = [0]*(length-n+1)
