@@ -11,6 +11,15 @@
   * Now that we have a temporary table with the correct columns for a specific API, we can store newly called data into it, compare it with the corresponding existing table, and add unique rows to our existing table. 
 
 ### StockProject_Setup
+* Run this script with your ticker symbol of choice and any of the non-premium Core Stock API's from Alpha Vantage to automatically insert the return data into the SQL tables created by stock_tbls.sql.
+* **1. Set up Environment:**
+ * Import the necessary modules to run this script
+* **2. Store API Key:**
+ * To gain access to the API's provided by Alpha Vantage, you need to request a *key*.
+ * Your key will need to be invoked everytime you make the API call.
+ * We stored our key string as a txt file just so it can't be seen through our code. This section just calls the txt file and assigns the key string to a variable.
+* **3. Construct General Form for API Call:**
+  * 
 
 ### Stock_Project_Analysis_Manual
 ### StockProject_Analysis_ANN
