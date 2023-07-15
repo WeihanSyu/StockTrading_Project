@@ -33,6 +33,15 @@
             self.url = 'https://www.alphavantage.co/query?function=' + self.function + '&symbol=' + self.symbol\
             + '&interval=' + interval + '&adjusted=' + adjusted + '&outputsize=' + outputsize + '&apikey='\
             + self.apikey + '&datatype=' + datatype
+
+    def api_call(function, symbol, **kwargs):
+        construct = api_construct(function, symbol, key)
+        if function == 'TIME_SERIES_INTRADAY':
+            construct.intraday(**kwargs)
+            tbl_name = 'intraday'
+        ...
+        url = construct.url
+        return url, tbl_name
     ```
     </details>
     
