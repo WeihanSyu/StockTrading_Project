@@ -33,7 +33,17 @@
             self.url = 'https://www.alphavantage.co/query?function=' + self.function + '&symbol=' + self.symbol\
             + '&interval=' + interval + '&adjusted=' + adjusted + '&outputsize=' + outputsize + '&apikey='\
             + self.apikey + '&datatype=' + datatype
+    ```
+    </details>
+    
+  * We use a Class object to store all the different non-premium stock data APIs. To call each API, a URL string is used with the format provided by Alpha Vantage.
+  * These URLs are constructed by a method in the class and most of the parameters can take multiple values, but have a default value which makes them optional, except for *function*, *symbol*, and *apikey* where function and symbol shouldn't have a default value and apikey is just static. Thus, these three parameters will be defined in the \__init__ method.
+    * Note that *interval* also doesn't have a default value and is a required parameter. I set it to the minimum time interval as default just for my own convenience.
+  * Since the other parameters all have default values, we will define them as key/value pairs in the methods and use **kwargs to call them in the next function.
+  * <details>
+    <summary>Code snippet</summary>
 
+    ```python
     def api_call(function, symbol, **kwargs):
         construct = api_construct(function, symbol, key)
         if function == 'TIME_SERIES_INTRADAY':
@@ -44,10 +54,16 @@
         return url, tbl_name
     ```
     </details>
-    
-  * We use a class object to store all the different non-premium stock data APIs. To call each API, a URL string is used with the format provided by Alpha Vantage.
-  * These URLs are constructed by a method in the class and most of the parameters can take multiple values, but have a default value (not empty), except for *function*, *symbol*, and *apikey* where function and symbol shouldn't have a default value and apikey is just static. Thus, these three parameters will be defined in the \__init__ method.
-  * Since the other parameters all have default values, we will define them as key/value pairs in the methods and use **kwargs to call them in a function afterwards.
+
+  * The function *api_call()* is our main function and only place that we need to change variables between runs if we want different data.
+  * The Class *api_construct()* is created inside *api_call()* so we have to input *function* and *symbol*. To change values for the rest of the parameters in the Class, we use **kwargs and simply put it as an input variable when calling the API methods.
+  * We also assign the SQL table names to a variable *tbl_name* in this function so that we can interact with the SQL table using pyodbc, e.g. "SELECT * FROM" + tbl_name + ";" without having to type in the correct table name in relevant places for every single run.
+* **4. Make the API Call**
+  * Call the main function with the parameter values of your choice
+  * Use *requests* HTTP library to make the call the API.
+  * data from successfull requests are either stored as json or csv (some can only be csv, check Alpha Vantage API documentation)
+* **5. Format the data and put into SQL Server**
+  * We split this 
 
 ### Stock_Project_Analysis_Manual
 ### StockProject_Analysis_ANN
