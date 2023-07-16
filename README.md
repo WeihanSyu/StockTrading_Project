@@ -62,9 +62,9 @@
   * Call the main function with the parameter values of your choice
   * Use *requests* HTTP library to make the call the API.
   * Data from successfull requests are either stored as json or csv (some can only be csv, check Alpha Vantage API documentation)
-* **5. Format the data and put into SQL Server**
-  * This section is split into three sub-sections.
-  * The first section deals with cleaning and transforming the raw data into a nice list where we can easily insert it into SQL Server.
+* **5.1 Clean and Transform Raw Data**
+  * Section 5 is split into three sub-sections.
+  * This first section deals with cleaning and transforming the raw data into a nice list where we can easily insert it into SQL Server.
   * The raw data for the json file type is a multi-dimensional dictionary. The outermost nest has two keys > 'Meta Data', 'Time Series ()';
   * We split the json data into two smaller dictionaries, one for 'Meta Data' and one for 'Time Series'()
   * **IMPORTANT:** APIs with an *interval* parameter will require the DATETIME data type in SQL not just DATE. To keep things simple, we could have just made every single table in SQL use the DATETIME format, but for analysis purposes, we wanted to keep it separate. So we must distinguish the two of them before we get to inserting the data into our tables.
@@ -108,9 +108,9 @@
     
   * The outermost nested key 'Time Series ()' for the raw dictionary output holds all the stock data in another nested dictionary where **date** is the outermost key so we iterate through each *date in dicts* and place all the data for one date in a **tuple inside a list**.
   * Each index of this list is now one unique row for a table in SQL
-* **5.1 Make the ODBC Connection**
+* **5.2 Make the ODBC Connection**
   * We use pyodbc to connect
-* **5.2 Insert the data into SQL Table**
+* **5.3 Insert the data into SQL Table**
   * To deal
   
 ### Stock_Project_Analysis_Manual
