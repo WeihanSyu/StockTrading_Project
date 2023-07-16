@@ -63,8 +63,29 @@
   * Use *requests* HTTP library to make the call the API.
   * data from successfull requests are either stored as json or csv (some can only be csv, check Alpha Vantage API documentation)
 * **5. Format the data and put into SQL Server**
-  * We split this 
+  * This section is split into three sub-sections.
+  * The first section deals with cleaning and transforming the raw data into a nice list where we can easily insert it into SQL Server.
+  * The raw data for the json file type is a multi-dimensional dictionary. The outer nest has two keys > 'Meta Data', 'Time Series ()';
+  * We split the json data into two smaller dictionaries, one for 'Meta Data' and one for 'Time Series'()
+  * **IMPORTANT:** APIs with an *interval* parameter will require the DATETIME data type in SQL not just DATE. To keep things simple, we could have just made every single table in SQL use the DATETIME format, but for analysis purposes, we wanted to keep it separate. So we must distinguish the two of them before we get to inserting the data into our tables.
+  * <details>
+    <summary>Code snippet</summary>
+ 
+    ```python
+    try:
+        del interval  
+    except Exception:
+        pass
 
+    try:
+        symbol = meta['2. Symbol']
+        interval = meta['4. Interval']
+    except KeyError:
+        symbol = meta['2. Symbol']
+    </details>
+
+  * Call the interval key in 'Meta Data' within a *try/except* block and assign an interval variable if we have one or leave it blank
+  * Next, we are going to put every single inner key for the 'Time Series()' dictionary and put them in a list which we will use to
 ### Stock_Project_Analysis_Manual
 ### StockProject_Analysis_ANN
 
