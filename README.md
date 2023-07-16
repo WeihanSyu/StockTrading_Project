@@ -82,6 +82,7 @@
         interval = meta['4. Interval']
     except KeyError:
         symbol = meta['2. Symbol']
+    ```
     </details>
 
   * Call the interval key in 'Meta Data' within a *try/except* block and assign an interval variable if we have one or leave it blank
@@ -104,6 +105,7 @@
             for key in tbl_keys:
                 values[i] = values[i] + tuple( [float(dicts[date][key])] )  
             i += 1
+    ```
     </details>
     
   * The outermost nested key 'Time Series ()' for the raw dictionary output holds all the stock data in another nested dictionary where **date** is the outermost key so we iterate through each *date in dicts* and place all the data for one date in a **tuple inside a list**.
@@ -123,13 +125,52 @@
     except NameError:
         cursor.execute("CREATE TABLE StockData.dbo.##tempstock_tbl\
             (stock_id VARCHAR(255), symbol VARCHAR(15), [date] DATE);")
+    ```
     </details>
 
   * Create a temporary table using the try/except block to check for the existence of *interval*. Use DATETIME if exists, else use DATE
   * Using the procedure created in *stock_tbls.sql*, dynamically add the column headers into the temporary table.
-  * We now have an empty table with the correct number and names of headers. Since we are using 
-     
+  * We now have an empty table with the correct number and names of headers.
+  * Since we are not typing out every single value in our list to an INSERT statement, we will use a **question mark <?>** as a place holder in SQL, supported by ODBC. This requires knowing how many columns there are and placing that many **?** marks into the INSERT statement. We want to do this dynamically, not change it very time we run:
+  * <details>
+    <summary>Code snippet</summary>
+
+    ```python
+    cursor.execute("SELECT COUNT(COLUMN_NAME) FROM StockData.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + tbl_name + "';")
+    colSize = str(cursor.fetchone())
+    colSize = colSize.replace("(","")
+    colSize = colSize.replace(")","")
+    colSize = colSize.replace(",","")
+    colSize = int(colSize)
+    xValues = ""
+    for i in range(0, colSize):
+        xValues = xValues + "?,"
+    xValues = xValues[:-1]
+
+    try:
+        interval
+        cursor.fast_executemany = True
+        cursor.executemany("INSERT INTO StockData.dbo.##tempstock_tbl (stock_id, symbol, [date], interval, " + headerStr + ")\
+                      VALUES (" + xValues + ")",\
+                      values)
+    except NameError:
+        cursor.fast_executemany = True
+        cursor.executemany("INSERT INTO StockData.dbo.##tempstock_tbl (stock_id, symbol, [date], " + headerStr + ")\
+                      VALUES (" + xValues + ")",\
+                      values)
+        
+    cursor.execute("INSERT INTO StockData.dbo." + tbl_name + " SELECT * FROM StockData.dbo.##tempstock_tbl\
+                    WHERE stock_id NOT IN (SELECT stock_id FROM StockData.dbo." + tbl_name + ")")
+    conn.commit()
+    ```
+    </details>
+    
+  * Use INFORMATION_SCHEMA.COLUMS with COUNT to get the number of columns. Then use cursor.fetchone to retrieve the output, then clean it up to make it an integer. Loop through the integer value and create the same amount of ? marks in a string value
+  * Finally, we insert all the values from the stock API into the temporary table with cursor.executemany and then insert the non-duplicate rows into the existing SQL Table by using the **WHERE ... NOT IN ...** clause
+  * End the script by commiting the SQL changes > conn.commit()
+    
 ### Stock_Project_Analysis_Manual
+
 ### StockProject_Analysis_ANN
 
 
