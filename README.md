@@ -111,8 +111,24 @@
 * **5.2 Make the ODBC Connection**
   * We use pyodbc to connect
 * **5.3 Insert the data into SQL Table**
-  * To deal
-  
+  * <details>
+    <summary>Code snippet</summary>
+
+    ```python
+    cursor.execute("DROP TABLE IF EXISTS StockData.dbo.##tempstock_tbl;")
+    try:
+        interval
+        cursor.execute("CREATE TABLE StockData.dbo.##tempstock_tbl\
+            (stock_id VARCHAR(255), symbol VARCHAR(15), [date] DATETIME, interval VARCHAR(10));")
+    except NameError:
+        cursor.execute("CREATE TABLE StockData.dbo.##tempstock_tbl\
+            (stock_id VARCHAR(255), symbol VARCHAR(15), [date] DATE);")
+    </details>
+
+  * Create a temporary table using the try/except block to check for the existence of *interval*. Use DATETIME if exists, else use DATE
+  * Using the procedure created in *stock_tbls.sql*, dynamically add the column headers into the temporary table.
+  * We now have an empty table with the correct number and names of headers. Since we are using 
+     
 ### Stock_Project_Analysis_Manual
 ### StockProject_Analysis_ANN
 
