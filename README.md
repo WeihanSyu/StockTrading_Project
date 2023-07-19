@@ -197,9 +197,11 @@ Run this script with your ticker symbol of choice and any of the non-premium Cor
 </details>
     
 ## Stock_Project_Analysis_Manual
+Pairs up with **mafuncs.py** (file of common moving average functions) to perform some basic buy and exit strategies using the closing prices stored by StockProject_Setup.
 
 
 ## StockProject_Analysis_ANN
+Simple artificial neural network using LSTM (long short-term memory networks) to try and predict stock prices.
 
 
 
