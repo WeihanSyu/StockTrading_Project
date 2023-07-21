@@ -2,6 +2,12 @@
 ## Summary
 * Using Python, call stock market APIs from Alpha Vantage to return market data for a range of time intervals and store them in a database on SQL Server.
 * Analysis includes some basic buy and exit strategies using various types of moving averages as well as a simple LSTM model for the closing prices.
+* **Important Details Regarding Alpha Vantage API Updates**
+1. **~2023-07-20**
+    * Intraday_Extended API has been merged with Intraday API. We have updated our code to reflect these changes, but have kept the old API intact as comments.
+    * Daily_Adjusted API has been downgraded to premium and a new Daily API has been released which does not factor dividends and splits into the closing prices.
+      * To call the new Daily API, simply remove all instances of *_Adjusted* and *adj* in both the Setup script and the SQL script.
+      * Or if you have premium, create a new table and methods for Daily.
 
 ## stock_tbls.sql
 * This is the sql script to generate the appropriate tables to contain the results from Alpha Vantage's stock APIs.
