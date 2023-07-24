@@ -6,7 +6,7 @@
 1. **~2023-07-20**
     * Intraday_Extended API has been merged with Intraday API. We have updated our code to reflect these changes, but have kept the old API intact as comments.
     * Daily_Adjusted API has been downgraded to premium and a new Daily API has been released which does not factor dividends and splits into the closing prices.
-      * To call the new Daily API, simply remove all instances of *_Adjusted* and *adj* in both the Setup script and the SQL script.
+      * To call the new Daily API, simply remove all instances of *adjusted-like* characters from daily_adj in both the Setup script and the SQL script.
       * Or if you have premium, create a new table and methods for Daily.
 
 ## stock_tbls.sql
@@ -204,7 +204,23 @@ Run this script with your ticker symbol of choice and any of the non-premium Cor
     
 ## Stock_Project_Analysis_Manual
 Pairs up with **mafuncs.py** (file of common moving average functions) to perform some basic buy and exit strategies using the closing prices stored by StockProject_Setup.
+<details>
+<summary><b>1. Set up Environment</b></summary>
 
+* Import the necessary modules to run this script
+</details>
+
+<details>
+<summary><b>2. Pull Data From Our SQL Table into a Pandas Dataframe</summary>
+
+* Create an engine object with SQLAlchemy and give the engine a connection string to SQL Server.
+* Use *engine.connect* to invoke SQL statements from the connected database
+</details>
+
+<details>
+<summary><b>3. Set Up Function to Call Initial Data</summary>
+
+</details>
 
 ## StockProject_Analysis_ANN
 Simple artificial neural network using LSTM (long short-term memory networks) to try and predict stock prices.
