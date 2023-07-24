@@ -211,7 +211,7 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
 </details>
 
 <details>
-<summary><b>2. Pull Data From Our SQL Table into a Pandas Dataframe</summary>
+<summary><b>2. Pull Data From Our SQL Table into a Pandas Dataframe</b></summary>
 
 * Create an engine object with SQLAlchemy and give the engine a connection string to SQL Server.
 * Use *engine.connect* to invoke SQL statements from the connected database
@@ -219,6 +219,53 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
 
 <details>
 <summary><b>3. Set Up Function to Call Initial Data</summary>
+
+* <details>
+  <summary><b>Code snippet</b></summary>
+  
+  ```python
+  def initial_data():
+      while True:
+          try:
+              start_date = input("Please enter the Starting Date (yyyy-m-dd)")
+              start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
+              if len(df.loc[df['date'] > datetime.date(start_date.year, start_date.month, start_date.day)]) > 0:
+              ...
+  ```
+  </details>
+
+* Incorporate *input()* functions so the user can pick their own start and end dates during runtime.
+* To deal with inputs that are not valid in format, we wrap everything in a *try/except* block
+* To deal with start dates that are beyond the last date or end dates that are before the first date, check with an *if* statement.
+* If all the date ranges are appropriate, then return a pandas dataframe for the stock data within the chosen dates.
+</details>
+
+<details>
+<summary><b>4. Set Up Function to Remove X-Axis Gaps Between Dates During Plotting</b></summary>
+
+* <details>
+  <summary><b>Code snippet</b></summary>
+
+  ```python
+  def equidate_ax(fig, ax, dates, fmt="%Y-%m-%d", label="Date"):
+      N = len(dates)
+      def format_date(index, pos):
+          index = np.clip(int(index + 0.5), 0, N - 1)
+          return dates[index].strftime(fmt)
+      ax.xaxis.set_major_formatter(FuncFormatter(format_date))
+      ax.set_xlabel(label)
+      fig.autofmt_xdate()
+  ```
+  </details>
+
+* The function above will make our x-axis dates equidistant during plotting.
+* This is important because there is no market activity during weekends or certain holidays, but with dates, Maplotlib sometimes sets up the graph so that dates are continuous even if we didn't input a continuous date range. This makes line graphs have breaks in between.
+* With equidistant points, there will be no breaks.
+</details>
+
+<details>
+<summary><b>Moving Average Crossover Strategy</b></summary>
+
 
 </details>
 
