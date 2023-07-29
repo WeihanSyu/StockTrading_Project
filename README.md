@@ -218,7 +218,7 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
 </details>
 
 <details>
-<summary><b>3. Set Up Function to Call Initial Data</summary>
+<summary><b>3. Set Up Function to Call Initial Data</b></summary>
 
 * <details>
   <summary><b>Code snippet</b></summary>
@@ -266,6 +266,17 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
 <details>
 <summary><b>Moving Average Crossover Strategy</b></summary>
 
+* There are different ways to utilize a crossover strategy, but for our method, we will consider two moving average functions of different time intervals.
+* A shorter time interval, called the fast moving average
+* A longer time interval, called the slow moving average.
+  * Consider a "buy-in" when the fast MA crosses **above** the slow MA which indicates short-term buying pressure and upwards momentum in the market.
+  * Consider an "exit" and go "short" when the fast MA crosses **below** the slow MA.
+* To start the analysis, get the raw data from a SQL table using the function from section 3. Then we set up the two MA functions and prepare it for plotting,
+* <details>
+  <summary><b>Code snippet</b></summary>
+
+  ```python
+  </details>
 
 </details>
 
