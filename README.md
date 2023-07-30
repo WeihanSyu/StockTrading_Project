@@ -264,7 +264,7 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
 </details>
 
 <details>
-<summary><b>Moving Average Crossover Strategy</b></summary>
+<summary><b>5. Moving Average Crossover Strategy</b></summary>
 
 * There are different ways to utilize a crossover strategy, but for our method, we will consider two moving average functions of different time intervals.
 * A shorter time interval, called the fast moving average
@@ -276,8 +276,22 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
   <summary><b>Code snippet</b></summary>
 
   ```python
+  def ma_setup(nF, nS, ma_func, s=2):
+      func_name = ma_func.__name__
+    
+      x, ini_points = ma_func(data[price_type], nF, len(data), s)
+      maFast = [np.nan]*ini_points + x
+    
+      y, ini_points = ma_func(data[price_type], nS, len(data), s)
+      maSlow = [np.nan]*ini_points + y
+    
+      return nF, nS, func_name, maFast, maSlow
+  ```
   </details>
 
+* The function above sets up the two MA functions. Since each one has a different, length, they will also start at different dates depending on how many initial dates they require to calculate the first moving average value. *ini_points* takes care of that for every MA function that we have in **mafuncs.py**
+*  To prepare the data the data for plotting, a *signal* and an *entry* column is added which will give a change in value whenever a MA crossover occurs. 
+* Additionally, we set up a *return* and *system_return* column to show instantenous buy/sell returns versus following the system strategy over longer periods.
 </details>
 
 ## StockProject_Analysis_ANN
