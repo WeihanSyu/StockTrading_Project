@@ -292,7 +292,7 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
 * The function above sets up the two MA functions. Since each one has a different, length, they will also start at different dates depending on how many initial dates they require to calculate the first moving average value. *ini_points* takes care of that for every MA function that we have in **mafuncs.py**
 *  To prepare the data the data for plotting, a *signal* and an *entry* column is added which will give a change in value whenever a MA crossover occurs. 
 * Additionally, we set up a *return* and *system_return* column to show instantenous buy/sell returns versus following the system strategy over longer periods.
-![Axonn](../../../../Software Learning And Cloud/HTML Lessons/Axonn2.jpg)
+* ![Axonn]()
 </details>
 
 ## StockProject_Analysis_ANN
