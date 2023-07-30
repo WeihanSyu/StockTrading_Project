@@ -316,6 +316,12 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
   * Make a histogram of MACD - signal
   * Plot the histogram with the MACD and signal
   * Like with all crossover strategies, the market has to gain some decent momentum before the crossover will happen so it always "lags". When looking for buy-in points, this means that the crossover might actually be very close to a peak so it is safer to exit before another crossover actually happens even if it means missing out on potential profits
+* <details>
+  <summary><b>Example plot for TRKA prices from 2022-12-01 to 2023-5-10</b></summary>
+  
+  ![TRKA MACD](https://github.com/WeihanSyu/StockTrading_Project/assets/70789234/b041b845-2705-4076-964c-bc610574768b)
+  </details>
+  
 </details>
 
 ## StockProject_Analysis_ANN
