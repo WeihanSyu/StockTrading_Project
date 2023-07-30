@@ -1,7 +1,7 @@
 # StockTrading_Project
 ## Summary
 * Using Python, call stock market APIs from Alpha Vantage to return market data for a range of time intervals and store them in a database on SQL Server.
-* Analysis includes some basic buy and exit strategies using various types of moving averages as well as a simple LSTM model for the closing prices.
+* Analysis includes some basic buy and exit strategies using various types of moving averages.
 * **Important Details Regarding Alpha Vantage API Updates**
 1. **~2023-07-20**
     * Intraday_Extended API has been merged with Intraday API. We have updated our code to reflect these changes, but have kept the old API intact as comments.
@@ -323,10 +323,4 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
   </details>
   
 </details>
-
-## StockProject_Analysis_ANN
-Simple artificial neural network using LSTM (long short-term memory networks) to try and predict stock prices.
-
-
-
 
