@@ -1,10 +1,12 @@
 def sma(prices, n, length, *args):
+    ini_points = n - 1
     ma = []
     for i in range(0, length-n+1):
         ma.append(sum(prices[i:(n+i)])/n)
-    return ma
+    return ma, ini_points
 
 def wma(prices, n, length, *args):
+    ini_points = n - 1
     ma = []
     for i in range(0, length-n+1):
         numerator = []
@@ -13,16 +15,18 @@ def wma(prices, n, length, *args):
             numerator.append(prices[j]*(k+1))
             k += 1
         ma.append(sum(numerator)/((n*(n+1))/2))
-    return ma
+    return ma, ini_points
 
 def ema(prices, n, length, s):
+    ini_points = n
     sma = sum(prices[0:n])/n
     ma = [(prices[n]*(s/(1+n))) + (sma*(1-(s/(1+n))))]
     for i in range(1, length-n): 
         ma.append( ( prices[i+n]*(s/(1+n)) ) + ( ma[i-1]*(1-(s/(1+n))) ) )
-    return ma
+    return ma, ini_points
 
 def dema(prices, n, length, s):
+    ini_points = n
     ma = []
     ema1 = ema(prices, n, length, s)
     l = len(ema1)
@@ -33,9 +37,10 @@ def dema(prices, n, length, s):
     for x,y in zip(ema1, ema_sq):
         ma.append(2*x - y)
    
-    return ma
+    return ma, ini_points
 
 def tema(prices, n, length, s):
+    ini_points = n 
     ma = []
     ema1 = ema(prices, n, length, s)
     l = len(ema1)
@@ -48,15 +53,16 @@ def tema(prices, n, length, s):
     for x,y,z in zip(ema1, ema_sq, ema_cu):
         ma.append( (3*x) - (3*y) + z )
     
-    return ma
+    return ma, ini_points
 
 def tma(prices, n, length, *args):
+    ini_points = 2*n-2
     ma = []
     simple = sma(prices, n, length)
     l = len(simple)
     for i in range(0, l-n+1):
         ma.append(sum(simple[i:(n+i)])/n)
-    return ma
+    return ma, ini_points
         
 def cmo(prices, n, length):
     SoU = [0]*length
@@ -72,6 +78,7 @@ def cmo(prices, n, length):
     return chande
 
 def vma(prices, n, length, s):
+    ini_points = 2*n - 2
     ma = []
     numerator = [0]*(length-n+1-9)
     denominator = [0]*(length-n+1-9)
@@ -83,9 +90,10 @@ def vma(prices, n, length, s):
             numerator[i-9] += ( prices[j]*( (a*b[j-9])**(abs(j-i-9)) ) )  
             denominator[i-9] += ( (a*b[j-9])**(abs(j-i-9)) )  
         ma.append( sum(numerator[(i-9):(i+1)]) / sum(denominator[(i-9):(i+1)]) )
-    return ma
+    return ma ,ini_points 
 
 def lsma(prices, n, length, *args):
+    ini_points = n - 1
     ma = []
     b = []
     a = []
@@ -103,4 +111,4 @@ def lsma(prices, n, length, *args):
         a.append( (sumX[i]/n) - ( b[i] * (sumT[i]/n) ) )
         ma.append(b[i]*t[i]+a[i])
     
-    return ma
+    return ma, ini_points
