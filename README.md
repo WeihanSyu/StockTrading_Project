@@ -269,8 +269,8 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
 * There are different ways to utilize a crossover strategy, but for our method, we will consider two moving average functions of different time intervals.
 * A shorter time interval, called the fast moving average
 * A longer time interval, called the slow moving average.
-  * Consider a "buy-in" when the fast MA crosses **above** the slow MA which indicates short-term buying pressure and upwards momentum in the market.
-  * Consider an "exit" and go "short" when the fast MA crosses **below** the slow MA.
+  * Consider a **buy-in** when the fast MA crosses **above** the slow MA which indicates short-term buying pressure and upwards momentum in the market.
+  * Consider an **exit** and go "short" when the fast MA crosses **below** the slow MA.
 * To start the analysis, get the raw data from a SQL table using the function from section 3. Then we set up the two MA functions and prepare it for plotting,
 * <details>
   <summary><b>Code snippet</b></summary>
@@ -292,7 +292,30 @@ Pairs up with **mafuncs.py** (file of common moving average functions) to perfor
 * The function above sets up the two MA functions. Since each one has a different, length, they will also start at different dates depending on how many initial dates they require to calculate the first moving average value. *ini_points* takes care of that for every MA function that we have in **mafuncs.py**
 *  To prepare the data the data for plotting, a *signal* and an *entry* column is added which will give a change in value whenever a MA crossover occurs. 
 * Additionally, we set up a *return* and *system_return* column to show instantenous buy/sell returns versus following the system strategy over longer periods.
-* ![Axonn]()
+* <details>
+  <summary><b>Example plot with indicators for TRKA prices using the exponential moving average</b></summary>
+  
+  ![trka_crossover](https://github.com/WeihanSyu/StockTrading_Project/assets/70789234/86bee5e5-f6d3-4ba5-b0d4-9d3d3643220c)
+  </details>
+
+</details>
+
+<details>
+<summary><b>6. MACD Strategy</b></summary>
+
+* The "Moving average convergence divergence" or MACD is a momentum indicator and in this strategy, we create the MACD line and watch for crossovers of it and a signal line.
+  * The MACD line is calculated by subtracting the 26-period exponential moving average from the 12-period exponential moving average
+  * The signal line is a 9-period exponential moving average OF the MACD line
+* When the MACD line crosses **above** the signal line, it is an indicator for potential **buy-in**
+* When the MACD line crosses **below** the signal line, it could indicate a market downtrend or **sell** off
+* The steps are straightforwards:
+  * Pull in market data from SQL tables
+  * Create the 26 and 12 period exponential moving averages
+  * Use them to get the MACD line
+  * Perform a 9-period EMA on the MACD line to get the signal line
+  * Make a histogram of MACD - signal
+  * Plot the histogram with the MACD and signal
+  * Like with all crossover strategies, the market has to gain some decent momentum before the crossover will happen so it always "lags". When looking for buy-in points, this means that the crossover might actually be very close to a peak so it is safer to exit before another crossover actually happens even if it means missing out on potential profits
 </details>
 
 ## StockProject_Analysis_ANN
