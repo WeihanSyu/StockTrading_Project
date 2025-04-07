@@ -1,6 +1,21 @@
 USE StockData;
 GO
 
+DROP TABLE IF EXISTS daily;
+GO
+CREATE TABLE daily (
+	stock_id VARCHAR(255) NOT NULL,
+	symbol VARCHAR(15) NOT NULL,
+	[date] DATE NOT NULL,
+	open_price DECIMAL(38, 4),
+	high_price DECIMAL(38, 4),
+	low_price DECIMAL(38, 4),
+	close_price DECIMAL(38, 4),
+	volume INT,
+	CONSTRAINT pk_daily PRIMARY KEY(stock_id)
+);
+GO
+
 DROP TABLE IF EXISTS daily_adj;
 GO
 CREATE TABLE daily_adj (
@@ -120,10 +135,11 @@ GO
 CREATE PROC dbo.addcol_tempstock
 	@colName VARCHAR(255) 
 AS
+BEGIN
 	DECLARE @sql NVARCHAR(MAX);
 	SET @sql = 'ALTER TABLE ##tempstock_tbl ADD ' + @colName + ' DECIMAL(38,4)';
 	EXEC(@sql);
+END;
 GO
-
 
 
