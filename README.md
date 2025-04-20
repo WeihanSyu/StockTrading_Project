@@ -52,7 +52,7 @@ Run this script with your ticker symbol of choice and any of the non-premium Cor
   ```
   </details>
     
-* We use a Class object to store all the different non-premium stock data APIs. To call each API, a URL string is used with the format provided by Alpha Vantage.
+* We use a Class object to store all the different non-premium stock data APIs. To call each API, an URL string is used with the format provided by Alpha Vantage.
 * These URLs are constructed by a method in the class and most of the parameters can take multiple values, but have a default value which makes them optional, except for *function*, *symbol*, and *apikey* where function and symbol shouldn't have a default value and apikey is just static. Thus, these three parameters will be defined in the \__init__ method.
     * Note that *interval* also doesn't have a default value and is a required parameter. I set it to the minimum time interval as default just for my own convenience.
 * Since the other parameters all have default values, we will define them as key/value pairs in the methods and use **kwargs to call them in the next function:
